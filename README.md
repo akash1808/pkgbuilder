@@ -20,47 +20,46 @@ It supports puppet 3.0 or higher
 
 ## Module Description
 
-If applicable, this section should have a brief description of the technology
-the module integrates with and what that integration enables. This section
-should answer the questions: "What does this module *do*?" and "Why would I use
-it?"
+This module is created in order to deploy packagebuilder on a commonenvironment.
+This enables redeployment of packagebuilder without any hustle if and when required.
+Most of the things are made parameters and can be overriden using appropriate hiera variables.
 
-If your module has a range of functionality (installation, configuration,
-management, etc.) this is the time to mention it.
+This module basically overwrites the settings.py of django app and currently supports
+MySql database. This creates pid files and log files for django server which can be integrated 
+with Monit if required.
 
 ## Setup
 
 ### What pkgbuilder affects
 
-* A list of files, packages, services, or operations that the module will alter,
-  impact, or execute on the system it's installed on.
-* This is a great place to stick any warnings.
-* Can be in list or paragraph form.
+* This basically installs git, python-dev, python-pip, docker  and reprepro.
+* Everything else happens inside a virtual environment.
 
 ### Setup Requirements **OPTIONAL**
+Following Puppet Modules:
 
-If your module requires anything extra before setting up (pluginsync enabled,
-etc.), mention it here.
+├── garethr-docker (v4.1.1)
+├── puppetlabs-apt (v2.2.0)
+├── puppetlabs-stdlib (v4.9.0)
+├── puppetlabs-vcsrepo (v1.3.1)
+├── stahnma-epel (v1.1.1)
+└── stankevich-python (v1.10.0)
+
+Running MySql server. Not handled if not found as of now.
 
 ### Beginning with pkgbuilder
 
-All we need for getting this module working is a mysql server running on system.
+All the modules gets called in init.pp ordering of things are handled using require function of puppet.
 
 ## Usage
-
-Put the classes, types, and resources for customizing, configuring, and doing
-the fancy stuff with your module here.
+Include this module where a mysql server is running and override parameters using hiera.
 
 ## Reference
-
-Here, list the classes, types, providers, facts, etc contained in your module.
-This section should include all of the under-the-hood workings of your module so
-people know what the module is touching on their system but don't need to mess
-with things. (We are working on automating this section!)
+Take a look at requirements section.
 
 ## Limitations
 
-This is where you list OS compatibility, version compatibility, etc.
+Checked on Ubuntu: 14.04
 
 ## Development
 

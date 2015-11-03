@@ -14,8 +14,19 @@
     },
     {
      "name": "puppetlabs-vcsrepo"
+    },
+    {
+     "name": "puppetlabs-apt"
+    },
+    {
+     "name": "garethr-docker"
+    },
+    {
+     "name": "stahnma-epel"
+    },
+    {
+     "name": "stankevich-python"
     }
-
   ]
 }
 
