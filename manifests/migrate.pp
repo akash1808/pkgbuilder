@@ -1,5 +1,5 @@
 
-# == Class: pkgbuilder::db
+# == Class: pkgbuilder::migrate
 #
 # This class is used to for running migrations
 # ==

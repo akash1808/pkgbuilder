@@ -1,9 +1,18 @@
-# == Class: pkgbuilder::db
+# == Class: pkgbuilder::source
 #
 # This class is used for getting the source code of pkgbuilder and installing it
 # ==
+# [*sourcerepo*]
+#   source repo for pkgbuilder code
 
-class pkgbuilder::source {
+class pkgbuilder::source (
+ $sourcerepo = 'https://github.com/aasemble/python-aasemble.django',
+ $db_rootuser = $pkgbuilder::db::db_rootuser,
+ $db_rootpassword = $pkgbuilder::db::db_rootpassword,
+ $db_name = $pkgbuilder::db::db_name,
+ $db_username = $pkgbuilder::db::db_username,
+ $db_password = $pkgbuilder::db::db_password,
+){
     exec { "apt-get update":
     command => "/usr/bin/apt-get update",
     logoutput => on_failure,
@@ -15,7 +24,7 @@ class pkgbuilder::source {
     vcsrepo { "${pkgbuilder::install_dir}/pkgbuilder":
     ensure => present,
     provider => git,
-    source => "${pkgbuilder::sourcerepo}",
+    source => "${sourcerepo}",
     revision => "master",
     user => "${pkgbuilder::username}",
     require => [Package["git"],Package["reprepro"],Class["pkgbuilder::db"]],

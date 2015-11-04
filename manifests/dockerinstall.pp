@@ -1,4 +1,4 @@
-# == Class: pkgbuilder::db
+# == Class: pkgbuilder::dockerinstall
 #
 # This class is used for installation of docker using puppet module docker
 # ==

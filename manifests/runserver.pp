@@ -1,5 +1,5 @@
 
-# == Class: pkgbuilder::db
+# == Class: pkgbuilder::runserver
 #
 # This class is used to make sure server is running
 # ==

@@ -1,4 +1,4 @@
-# == Class: pkgbuilder::db
+# == Class: pkgbuilder::pythoninstall
 #
 # This class is used for installation of python using puppet python module
 # ==
