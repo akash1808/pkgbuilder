@@ -26,8 +26,8 @@
 #
 class pkgbuilder (
  $install_dir = '/usr/share',
- $username = 'root',
- $public_ip = '127.0.0.1',
+ $username    = 'root',
+ $public_ip   = '127.0.0.1',
  $public_port = '8080'
  
  ){

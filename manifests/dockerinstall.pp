@@ -7,6 +7,6 @@
 class pkgbuilder::dockerinstall {
 class { 'docker':
   manage_kernel => false,
-  	}
+      }
 
 }

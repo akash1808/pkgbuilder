@@ -21,28 +21,28 @@
 #
 
 class pkgbuilder::db  (
- $db_rootuser = 'root',
+ $db_rootuser     = 'root',
  $db_rootpassword = 'root',
- $db_name = 'pkgbuilder',
- $db_username = 'pkgbuilder',
- $db_password = 'change3M3',
+ $db_name         = 'pkgbuilder',
+ $db_username     = 'pkgbuilder',
+ $db_password     = 'change3M3',
 
  ){
     service { "mysql":
-    enable => true,
-    ensure => running,
+    enable   => true,
+    ensure   => running,
   }
 
     mysqldb { "${db_name}":
-        user => "${db_username}",
-        password => "${db_password}",
-    }
+    user     => "${db_username}",
+    password => "${db_password}",
+  }
 }
 
 
 define mysqldb( $user, $password ) {
     exec { "create-${name}-db":
-      unless => "/usr/bin/mysql -u${user} -p${password} ${name}",
+      unless  => "/usr/bin/mysql -u${user} -p${password} ${name}",
       command => "/usr/bin/mysql -u${db_rootuser} -p${db_rootpassword} -e \"create database ${name}; grant all on ${name}.* to ${user}@localhost identified by '$password';\"",
       require => Service["mysql"],
     }
