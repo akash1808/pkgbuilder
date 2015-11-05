@@ -25,12 +25,14 @@
 # Copyright 2015 Akash Agrawal, unless otherwise noted.
 #
 class pkgbuilder (
- $install_dir = '/usr/share',
- $username    = 'root',
+ $install_dir = '/home/pkgbuilder',
+ $username    = 'pkgbuilder',
+ $group       = 'www-data',
  $public_ip   = '127.0.0.1',
- $public_port = '8080'
- 
+ $public_port = '8080',
+ $log_dir     = '/var/log/pkgbuilder' 
  ){
+    include pkgbuilder::createuser
     include pkgbuilder::db
     include pkgbuilder::source
     include pkgbuilder::pythoninstall

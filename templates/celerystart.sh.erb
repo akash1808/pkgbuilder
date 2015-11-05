@@ -27,7 +27,7 @@ if [[ `/usr/bin/whoami` == $USERDEPLOYER ]]
     cd $FOLDER
     #COMMAND    
     export C_FORCE_ROOT=true
-    source venv/bin/activate && python manage.py celeryd -B -l info >> /var/log/celerybeat.log 2>&1 &
+    source venv/bin/activate && python manage.py celeryd -B -l info >>  <%= @log_dir %>/celerybeat.log 2>&1 &
 
     sleep 2
     PROC=`ps -ef | grep $KEYWORD | grep -v grep | awk -F" " '{ print $2 }'`;

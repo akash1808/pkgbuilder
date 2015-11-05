@@ -27,7 +27,8 @@ class pkgbuilder::source (
     source        => "${sourcerepo}",
     revision      => "master",
     user          => "${pkgbuilder::username}",
-    require       => [Package["git"],Package["reprepro"],Class["pkgbuilder::db"]],
+    owner         => "${pkgbuilder::username}",
+    require       => [Package["git"],Package["reprepro"],Class["pkgbuilder::createuser"],Class["pkgbuilder::db"]],
  
   }	
 

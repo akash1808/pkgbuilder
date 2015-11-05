@@ -6,6 +6,13 @@
 
 class pkgbuilder::scripts {
   require pkgbuilder::migrate
+  
+  file { "${pkgbuilder::log_dir}":
+  ensure       => directory,
+  group        => "${pkgbuilder::group}",
+  mode         => '0770',
+        
+       }
 
   file { "${pkgbuilder::install_dir}/pkgbuilder/start.sh":
   ensure       => file,
