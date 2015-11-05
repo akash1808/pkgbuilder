@@ -28,12 +28,12 @@ class pkgbuilder::db  (
  $db_password     = 'change3M3',
 
  ){
-    service { "mysql":
+  service { "mysql":
     enable   => true,
     ensure   => running,
   }
 
-    mysqldb { "${db_name}":
+   mysqldb { "${db_name}":
     user     => "${db_username}",
     password => "${db_password}",
   }

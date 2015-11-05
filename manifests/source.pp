@@ -13,13 +13,8 @@ class pkgbuilder::source (
  $db_username     = $pkgbuilder::db::db_username,
  $db_password     = $pkgbuilder::db::db_password,
 ){
-  exec { "apt-get update":
-    command       => "/usr/bin/apt-get update",
-    logoutput     => on_failure,
-  }
   package { "git": 
     ensure        => installed, 
-    require       => Exec['apt-get update'], 
   }
     
   package { "reprepro": 
@@ -41,6 +36,12 @@ class pkgbuilder::source (
     content       => template('pkgbuilder/settings.py.erb'),
     require       => Vcsrepo["${pkgbuilder::install_dir}/pkgbuilder"],
   }
+  exec { "apt-get update":
+    command       => "/usr/bin/apt-get update",
+    logoutput     => on_failure,
+  }
+
+  Exec["apt-get update"] -> Package <| |>
 }
 
 
