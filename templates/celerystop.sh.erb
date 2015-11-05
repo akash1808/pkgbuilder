@@ -1,7 +1,7 @@
 #!/bin/bash
 #VARIABLES
 SERVICE_NAME="pkgbuilder-celery"
-USERDEPLOYER="root"
+USERDEPLOYER="<%= @username %>"
 KEYWORD="celeryd"
 
 if [[ `/usr/bin/whoami` == $USERDEPLOYER ]]

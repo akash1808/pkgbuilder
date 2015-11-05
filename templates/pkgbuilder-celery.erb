@@ -8,8 +8,8 @@
 #   description: <description>
 # Source function library.
 SERVICE_NAME="pkgbuilder-celery"
-SERVICE_USER="root"
-FOLDER="/usr/share/pkgbuilder"
+SERVICE_USER="<%= @username %>"
+FOLDER="<%= @install_dir %>/pkgbuilder"
 
 start() {
 

@@ -37,5 +37,5 @@ class pkgbuilder (
     include pkgbuilder::dockerinstall
     include pkgbuilder::dbuildinstall
     include pkgbuilder::migrate
-    include pkgbuilder::runserver
+    include pkgbuilder::scripts
 }
