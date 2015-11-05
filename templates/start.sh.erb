@@ -1,0 +1,46 @@
+#!/bin/bash
+#VARIABLES
+SERVICE_NAME="pkgbuilder"
+USERDEPLOYER="root"
+FOLDER=/usr/share/pkgbuilder/
+KEYWORD="runserver"
+
+#
+#CHECKING SYSTEM STATUS
+PROC=`ps -ef | grep $SERVICE_NAME | grep $KEYWORD | grep -v grep | awk -F" " '{ print $2 }'`;
+
+if [ $PROC ]; then
+  echo "$SERVICE_NAME is running!"
+  echo "Stop then first!"
+  exit
+fi
+###
+#
+#STARTING
+if [[ `/usr/bin/whoami` == $USERDEPLOYER ]]
+  then
+
+    pushd .
+    echo " "
+    echo "Starting $SERVICE_NAME..."
+    echo "cd $FOLDER"
+    cd $FOLDER
+    #COMMAND    
+    source venv/bin/activate && python manage.py runserver 0.0.0.0:8080 >> /var/log/pkgbuilder.log 2>&1 &
+
+    sleep 2
+    PROC=`ps -ef | grep $SERVICE_NAME | grep $KEYWORD | grep -v grep | awk -F" " '{ print $2 }'`;
+
+    if [ -n "$PROC" ] && [ "$PROC" != "" ]
+    then
+      echo "OK: system started."
+    else
+      echo "ERROR: system process not found!"
+    fi
+
+    echo "script execution finished!"
+    popd
+
+else
+  echo "User must be $USERDEPLOYER !"
+fi

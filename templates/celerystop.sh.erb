@@ -1,0 +1,31 @@
+#!/bin/bash
+#VARIABLES
+SERVICE_NAME="pkgbuilder-celery"
+USERDEPLOYER="root"
+KEYWORD="celeryd"
+
+if [[ `/usr/bin/whoami` == $USERDEPLOYER ]]
+  then
+
+    pushd .
+    echo "Stopping $SERVICE_NAME......"
+
+    #KILLING PROCESS
+    processPID=`ps -ef | grep $KEYWORD | grep -v grep | awk -F" " '{ print $2 }'`
+    echo "Trying to kill process with key $SERVICE_NAME - ignore error messages below."
+    kill $processPID
+    sleep 2
+
+    while [ -n "$processPID" ]
+      do
+    echo "Waiting process ($processPID) to shutdown...2s"
+    sleep 2
+        processPID=`ps -ef | grep $KEYWORD | grep -v grep | awk -F" " '{ print $2 }'`
+      done
+
+    echo "Ensured process with key $SERVICE_NAME is no longer running."
+    popd
+
+else
+  echo "User must be $USERDEPLOYER !"
+fi

@@ -1,0 +1,52 @@
+#!/bin/bash
+#
+#   Linux chkconfig stuff:
+#
+#   chkconfig: 2345 56 10
+#   2345 56  
+#   2345 10  
+#   description: <description>
+# Source function library.
+SERVICE_NAME="pkgbuilder-celery"
+SERVICE_USER="root"
+FOLDER="/usr/share/pkgbuilder"
+
+start() {
+
+if [[ `/usr/bin/whoami` == $SERVICE_USER ]]
+then
+  cd $FOLDER
+  ./celerystart.sh
+
+#NOT USER _root
+else 
+  cd $FOLDER
+  su $SERVICE_USER ./celerystart.sh
+fi
+}
+
+stop() {
+  cd $FOLDER
+  su $SERVICE_USER ./celerystop.sh
+}
+
+#Body main
+case "$1" in
+  start)
+    start
+    ;;
+  stop)
+    stop
+    ;;
+  restart)
+    echo "Restarting $SERVICE_NAME..."
+    echo " "
+    stop
+    sleep 10
+    start
+    ;;
+  *)
+    echo $"Usage: $0 {start|stop|restart}"
+    exit 1
+esac
+exit 0
