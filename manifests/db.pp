@@ -28,22 +28,22 @@ class pkgbuilder::db  (
  $db_password     = 'change3M3',
 
  ){
-  service { "mysql":
-    enable   => true,
-    ensure   => running,
+
+  exec {"check_presence .my.cnf":
+  command => '/bin/true',
+  path            => ['/usr/bin','/usr/sbin','/bin','/sbin'],
+  onlyif => '/usr/bin/test -e /root/.my.cnf',
+ 
   }
 
-   mysqldb { "${db_name}":
-    user     => "${db_username}",
-    password => "${db_password}",
+ mysql::db { "${db_name}":
+  user     => "${db_username}",
+  password => "${db_password}",
+  host     => 'localhost',
+  grant    => ['ALL'],
+  require  => Exec["check_presence .my.cnf"],
   }
+
 }
 
 
-define mysqldb( $user, $password ) {
-    exec { "create-${name}-db":
-      unless  => "/usr/bin/mysql -u${user} -p${password} ${name}",
-      command => "/usr/bin/mysql -u${db_rootuser} -p${db_rootpassword} -e \"create database ${name}; grant all on ${name}.* to ${user}@localhost identified by '$password';\"",
-      require => Service["mysql"],
-    }
-  }
