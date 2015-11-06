@@ -30,10 +30,10 @@ class pkgbuilder::db  (
  ){
 
   exec {"check_presence .my.cnf":
-  command => '/bin/true',
-  path            => ['/usr/bin','/usr/sbin','/bin','/sbin'],
-  onlyif => '/usr/bin/test -e /root/.my.cnf',
- 
+  command  => '/bin/true',
+  path     => ['/usr/bin','/usr/sbin','/bin','/sbin'],
+  onlyif   => '/usr/bin/test -e /root/.my.cnf',
+  require  => [Service["mysql"],File[ "/root/.my.cnf"]],
   }
 
  mysql::db { "${db_name}":
@@ -43,7 +43,16 @@ class pkgbuilder::db  (
   grant    => ['ALL'],
   require  => Exec["check_presence .my.cnf"],
   }
+ 
+ service { "mysql":		
+  enable   => true,		
+  ensure   => running,	
+ }
 
+  file { "/root/.my.cnf":
+  ensure   => file,
+  content  => template('pkgbuilder/my.cnf.erb'),
+  mode     => 644,
+  require  => Service["mysql"],
+        }
 }
-
-
